@@ -134,7 +134,7 @@
                     plugin.chooseItem();
                 }
             });
-            $(".sensei-anywhere input").on("keydown", function (e) {
+            $(".sensei-anywhere input").on("keyup", function (e) {
                 var usedKeyCodes = [9,13,38,40];
                 if (!_.contains(usedKeyCodes, e.which)) {
                     var term = $(this).val().trim();
