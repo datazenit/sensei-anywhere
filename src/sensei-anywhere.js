@@ -116,13 +116,13 @@
                     plugin.hideSearchBox();
                 }
             });
-            Mousetrap.bind(["up", "tab"], function (e) {
+            Mousetrap.bind(["up", "shift-tab"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.moveActiveItemUp();
                 }
             });
-            Mousetrap.bind(["down", "shift-tab"], function (e) {
+            Mousetrap.bind(["down", "tab"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.moveActiveItemDown();
