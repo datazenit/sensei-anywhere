@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sensei Anywhere</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../src/sensei-anywhere.css"/>
+    <style type="text/css">
+        .container {
+            width: 880px;
+            margin: 50px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+          <h1>Sensei Anywhere<br><small>Navigation tool powered by fuzzy search</small></h1>
+        </div>
+        <p>Press <kbd>command+k</kbd> or <kbd>ctrl+k</kbd> to activate search box</p>
+    </div>
+</div>
+
+
+<div class="sensei-anywhere">
+    <input type="text" class="mousetrap"/>
+    <ul class="sensei-anywhere-list">
+    </ul>
+</div>
+
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/lodash/dist/lodash.min.js"></script>
+<script type="text/javascript" src="../lib/mousetrap/mousetrap.min.js"></script>
+<script type="text/javascript" src="../src/sensei-anywhere.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        // sample data
+        var data = ["assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js",
+                "assets/jquery.min.js", "assets/lodash.js", "assets/bootstrap.css", "src/scala/main.scala", 
+                "src/scala/helpers.scala", "src/scala/server.scala", "src/scala/serverTest.scala"];
+
+        var anywhere = $.anywhere(data, ['command+k', 'ctrl+k']);
+        anywhere.events.on("select", function (item) {
+           alert("Cool, your selected item: " + item);
+           console.info("event:select", item);
+        });
+        anywhere.events.on("highlight", function (item) {
+           console.info("event:highlight", item);
+        });
+    });
+</script>
+</body>
+</html>
