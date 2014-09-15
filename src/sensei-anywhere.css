@@ -33,7 +33,8 @@
 .sensei-anywhere ul>li:first-child {
     border-top-style: none;
 }
-.sensei-anywhere ul>li.active {
+.sensei-anywhere ul>li.active,
+.sensei-anywhere ul>li:hover {
     background: #3399ff;
     color: white;
 }

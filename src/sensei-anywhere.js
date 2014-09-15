@@ -141,6 +141,12 @@
                     plugin.updateResults(term);
                 }
             });
+            $(".sensei-anywhere .sensei-anywhere-list").on("click", "li", function (e) {
+                e.preventDefault();
+                console.log($(this));
+                $(this).addClass("active").siblings().removeClass("active");
+                plugin.chooseItem();
+            });
             plugin.events.trigger("init");
             return plugin;
         };
