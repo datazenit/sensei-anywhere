@@ -116,7 +116,7 @@
                     plugin.hideSearchBox();
                 }
             });
-            Mousetrap.bind(["up", "shift-tab"], function (e) {
+            Mousetrap.bind(["up", "shift+tab"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.moveActiveItemUp();
