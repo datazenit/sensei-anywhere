@@ -6,6 +6,12 @@ Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is
 
 Sensei Anywhere depends on jQuery, lodash/underscore.js and Mousetrap. Include these libraries together with ``sensei-anywhere.css`` and ``sensei-anywhere.js``.
 
+## Demo
+
+Click on the image to view demo.
+
+[![Sensei Anywhere Demo](http://lauris.github.io/images/blog/sensei-anywhere-screenshot.png)](http://datazenit.com/static/sensei-anywhere/example/)
+
 ## Usage
 
 Create an array containing your items, e.g., file names, paths, links or anything else. 
