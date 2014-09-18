@@ -17,7 +17,12 @@ Click on the image to view demo.
 Create an array containing your items, e.g., file names, paths, links or anything else. 
 
 ```
-var data = ["assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js"];
+var data = [
+	{
+		group: "files",
+		items: "assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js"
+	}
+];
 ```
 
 Initialize Sensei Anywhere and define shortcuts. In this example shortcuts are ``command+k`` and ``ctrl+k``. You can define as many shortcuts as you want.
