@@ -18,7 +18,9 @@
 <div class="container">
     <div class="row">
         <div class="page-header">
-          <h1>Sensei Anywhere<br><small>Navigation tool powered by fuzzy search</small></h1>
+            <h1>Sensei Anywhere<br>
+                <small>Navigation tool powered by fuzzy search</small>
+            </h1>
         </div>
         <p>Press <kbd>command+k</kbd> or <kbd>ctrl+k</kbd> to activate search box.</p>
     </div>
@@ -39,17 +41,30 @@
     $(function () {
 
         // sample data
-        var data = ["assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js",
-                "assets/jquery.min.js", "assets/lodash.js", "assets/bootstrap.css", "src/scala/main.scala", 
-                "src/scala/helpers.scala", "src/scala/server.scala", "src/scala/serverTest.scala"];
+        var data = [
+            {
+                group: "files",
+                items: ["assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js",
+                    "assets/jquery.min.js", "assets/lodash.js", "assets/bootstrap.css", "src/scala/main.scala",
+                    "src/scala/helpers.scala", "src/scala/server.scala", "src/scala/serverTest.scala"]
+            },
+            {
+                group: "tasks",
+                items: ["jshint", "jslint", "test", "cssminify", "build"]
+            },
+            {
+                group: "VCS",
+                items: ["pull", "push", "commit", "merge", "diff", "rebase", "checkout", "stash", "tag"]
+            }
+        ];
 
         var anywhere = $.anywhere(data, ['command+k', 'ctrl+k']);
         anywhere.events.on("select", function (item) {
-           alert("Cool, your selected item: " + item);
-           console.info("event:select", item);
+            alert("Cool, your selected item: " + item);
+            console.info("event:select", item);
         });
         anywhere.events.on("highlight", function (item) {
-           console.info("event:highlight", item);
+            console.info("event:highlight", item);
         });
     });
 </script>

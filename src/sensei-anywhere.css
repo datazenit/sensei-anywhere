@@ -14,7 +14,7 @@
     padding: 7px 8px;
     border-radius: 3px;
     background: white;
-    box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     outline: none;
     width: 100%;
 }
@@ -25,16 +25,24 @@
     border-top-style: none;
     margin-top: -1px;
 }
-.sensei-anywhere ul>li {
+.sensei-anywhere li.item-group {
+    background: #eee;
+    padding: 2px 4px 1px 4px;
+    font-size: 9px;
+    border-top: 1px solid #ddd;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.sensei-anywhere li.item {
     background: #f7f7f7;
-    padding: 3px 4px;
+    padding: 3px 12px;
     border-top: 1px solid #ddd;
 }
-.sensei-anywhere ul>li:first-child {
-    border-top-style: none;
+.sensei-anywhere li.item:first-child {
+    /*border-top-style: none;*/
 }
-.sensei-anywhere ul>li.active,
-.sensei-anywhere ul>li:hover {
+.sensei-anywhere li.item.active,
+.sensei-anywhere li.item:hover {
     background: #3399ff;
     color: white;
 }

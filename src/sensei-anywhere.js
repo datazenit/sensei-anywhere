@@ -4,15 +4,14 @@
         search = search.toUpperCase();
         text = text.toUpperCase();
 
-        var j = -1; // remembers position of last found character
+        var j = -1;
 
-        // consider each search character one at a time
         for (var i = 0; i < search.length; i++) {
             var l = search[i];
-            if (l == ' ') continue;     // ignore spaces
+            if (l == ' ') continue;
 
-            j = text.indexOf(l, j+1);     // search for character & update position
-            if (j == -1) return false;  // if it's not found, exclude this item
+            j = text.indexOf(l, j + 1);
+            if (j == -1) return false;
         }
         return true;
     }
@@ -31,7 +30,7 @@
             }
             this._events[event].push({callback: callback, context: context});
         };
-        plugin.off = plugin.events.trigger = function (event) {
+        plugin.events.trigger = function (event) {
             var args = Array.prototype.slice.call(arguments, 1);
             if (_.has(this._events, event)) {
                 var events = this._events[event];
@@ -51,8 +50,9 @@
         plugin.showSearchBox = function () {
             plugin.isActive = true;
             $(".sensei-anywhere").toggle();
-            $(".sensei-anywhere input").focus();
-            plugin.updateResults($(".sensei-anywhere input").val().trim());
+            var $input = $(".sensei-anywhere input");
+            $input.focus();
+            plugin.updateResults($input.val().trim());
             plugin.events.trigger("show");
         };
 
@@ -64,45 +64,59 @@
 
         plugin.updateResults = function (term) {
 
-            $(".sensei-anywhere .sensei-anywhere-list").html("");
+            var head;
+            var group_size = 5;
+            var $wrapper = $(".sensei-anywhere .sensei-anywhere-list");
+            $wrapper.html("");
 
-            if (term) {
-                var head = _.filter(plugin.data, function (item) { return match(term, item); });
-            } else {
-                var head = plugin.data;
-            }
+            _.each(plugin.data, function (group) {
 
-            _.each(head.slice(0, 10), function (item) {
-                $(".sensei-anywhere .sensei-anywhere-list").append("<li>"+item+"</li>");
+                if (term) {
+                    head = _.filter(group.items, function (item) {
+                        return match(term, item);
+                    });
+                } else {
+                    head = group.items;
+                }
+
+                if (head.length > 0) {
+                    var $li = $("<li>").addClass("item-group").text(group.group);
+                    $wrapper.append($li);
+
+                    _.each(head.slice(0, group_size), function (item) {
+                        $wrapper.append($("<li>").addClass("item").text(item));
+                    });
+                }
+
             });
 
-            $(".sensei-anywhere .sensei-anywhere-list>li:first").addClass("active");
+            $(".sensei-anywhere .sensei-anywhere-list li.item:first").addClass("active");
         };
 
         plugin.moveActiveItemUp = function () {
-            var $curr = $(".sensei-anywhere .sensei-anywhere-list>li.active");
+            var $curr = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
             $curr.removeClass("active");
-            if ($curr.prev().length > 0) {
-                var $item = $curr.prev().addClass("active");
+            if ($curr.prevAll("li.item").length > 0) {
+                var $item = $curr.prevAll("li.item").first().addClass("active");
             } else {
-                var $item = $(".sensei-anywhere .sensei-anywhere-list>li:last").addClass("active");
+                var $item = $(".sensei-anywhere .sensei-anywhere-list li.item:last").addClass("active");
             }
             plugin.events.trigger("highlight", $item.text());
         };
 
         plugin.moveActiveItemDown = function () {
-            var $curr = $(".sensei-anywhere .sensei-anywhere-list>li.active");
+            var $curr = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
             $curr.removeClass("active");
-            if ($curr.next().length > 0) {
-                var $item = $curr.next().addClass("active");
+            if ($curr.nextAll("li.item").length > 0) {
+                var $item = $curr.nextAll("li.item").first().addClass("active");
             } else {
-                var $item = $(".sensei-anywhere .sensei-anywhere-list>li:first").addClass("active");
+                var $item = $(".sensei-anywhere .sensei-anywhere-list li.item:first").addClass("active");
             }
             plugin.events.trigger("highlight", $item.text());
         };
 
         plugin.chooseItem = function () {
-            var item = $(".sensei-anywhere .sensei-anywhere-list>li.active").text();
+            var item = $(".sensei-anywhere .sensei-anywhere-list li.item.active").text();
             plugin.hideSearchBox();
             plugin.events.trigger("select", item);
         };
@@ -135,13 +149,13 @@
                 }
             });
             $(".sensei-anywhere input").on("keyup", function (e) {
-                var usedKeyCodes = [9,13,38,40];
+                var usedKeyCodes = [9, 13, 38, 40];
                 if (!_.contains(usedKeyCodes, e.which)) {
                     var term = $(this).val().trim();
                     plugin.updateResults(term);
                 }
             });
-            $(".sensei-anywhere .sensei-anywhere-list").on("click", "li", function (e) {
+            $(".sensei-anywhere .sensei-anywhere-list").on("click", "li.item", function (e) {
                 e.preventDefault();
                 console.log($(this));
                 $(this).addClass("active").siblings().removeClass("active");
