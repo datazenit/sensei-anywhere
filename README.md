@@ -1,6 +1,6 @@
 # Sensei Anywhere
 
-Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is used in [Datazenit](http://datazenit.com/) to navigate between connections, databases and tables.
+Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is used in [Datazenit](http://datazenit.com/) to navigate between connections, databases and tables. This project is currently under heavy development, use at your own risk. 
 
 ## Installation
 
@@ -11,6 +11,10 @@ Sensei Anywhere depends on jQuery, lodash/underscore.js and Mousetrap. Include t
 Click on the image to view demo.
 
 [![Sensei Anywhere Demo](http://lauris.github.io/images/blog/sensei-anywhere.png)](http://datazenit.com/static/sensei-anywhere/example/)
+
+## More info
+
+Read this blog post: [Sensei Anywhere](http://lauris.github.io/development/2014/09/16/sensei-anywhere/).
 
 ## Usage
 
