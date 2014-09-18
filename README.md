@@ -10,7 +10,7 @@ Sensei Anywhere depends on jQuery, lodash/underscore.js and Mousetrap. Include t
 
 Click on the image to view demo.
 
-[![Sensei Anywhere Demo](http://lauris.github.io/images/blog/sensei-anywhere-screenshot.png)](http://datazenit.com/static/sensei-anywhere/example/)
+[![Sensei Anywhere Demo](http://lauris.github.io/images/blog/sensei.png)](http://datazenit.com/static/sensei-anywhere/example/)
 
 ## Usage
 
