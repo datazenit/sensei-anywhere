@@ -54,9 +54,9 @@
         var limitPerGroup = 5;
         var anywhere = $.anywhere(data, ['command+k', 'ctrl+k'], limitPerGroup, true);
 
-        anywhere.events.on("select", function (item) {
+        anywhere.events.on("select", function (item, data) {
             alert("Cool, your selected item: " + item);
-            console.info("event:select", item);
+            console.info("event:select", item, data);
         });
         anywhere.events.on("highlight", function (item) {
             console.info("event:highlight", item);

@@ -47,7 +47,6 @@
             if (_.has(this._events, event)) {
                 var events = this._events[event];
                 _.each(events, function (e) {
-                    console.log("trigger event", event, e);
                     var cbk = _.bind(e["callback"], e["context"]);
                     cbk.apply(this, args);
                 });
@@ -111,7 +110,7 @@
                     }
 
                     _.each(head.slice(0, group_size), function (item) {
-                        $wrapper.append($("<li>").addClass("item").text(item));
+                        $wrapper.append($("<li>").addClass("item").text(item).data("group", group.group));
                     });
                 }
 
@@ -152,9 +151,10 @@
          * Choose active item
          */
         plugin.chooseItem = function () {
-            var item = $(".sensei-anywhere .sensei-anywhere-list li.item.active").text();
+            var $item = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
+            var item = $item.text();
             plugin.hideSearchBox();
-            plugin.events.trigger("select", item);
+            plugin.events.trigger("select", item, $item.data());
         };
 
         /**
@@ -208,7 +208,6 @@
             });
             $(".sensei-anywhere .sensei-anywhere-list").on("click", "li.item", function (e) {
                 e.preventDefault();
-                console.log($(this));
                 $(this).addClass("active").siblings().removeClass("active");
                 plugin.chooseItem();
             });
