@@ -16,7 +16,10 @@
         return true;
     }
 
-    $.anywhere = function (data, shortcuts) {
+    $.anywhere = function (data, shortcuts, limitPerGroup) {
+
+        // default value for limitPerGroup setting
+        limitPerGroup = limitPerGroup || 5;
 
         var plugin = this;
         plugin.data = [];
@@ -65,7 +68,7 @@
         plugin.updateResults = function (term) {
 
             var head;
-            var group_size = 5;
+            var group_size = limitPerGroup;
             var $wrapper = $(".sensei-anywhere .sensei-anywhere-list");
             $wrapper.html("");
 
