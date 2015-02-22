@@ -16,7 +16,7 @@
         return true;
     }
 
-    $.anywhere = function (data, shortcuts, limitPerGroup) {
+    $.anywhere = function (data, shortcuts, limitPerGroup, showGroupCount) {
 
         // default value for limitPerGroup setting
         limitPerGroup = limitPerGroup || 5;
@@ -85,6 +85,11 @@
                 if (head.length > 0) {
                     var $li = $("<li>").addClass("item-group").text(group.group);
                     $wrapper.append($li);
+
+                    if (showGroupCount) {
+                        var $span = $("<span>").addClass("group-count").text(" " + head.length);
+                        $li.append($span);
+                    }
 
                     _.each(head.slice(0, group_size), function (item) {
                         $wrapper.append($("<li>").addClass("item").text(item));

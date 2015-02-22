@@ -34,6 +34,9 @@
     font-weight: bold;
     text-transform: capitalize;
 }
+.sensei-anywhere li .group-count {
+    color: gray;
+}
 .sensei-anywhere li.item {
     background: #f7f7f7;
     padding: 3px 12px;
@@ -46,4 +49,7 @@
 .sensei-anywhere li.item:hover {
     background: #5e8532;
     color: white;
+}
+.sensei-anywhere li.more-item {
+    color: gray;
 }
