@@ -130,6 +130,15 @@
         };
 
         plugin.init = function (data, shortcuts) {
+
+            // render html
+            if ($(".sensei-anywhere").length === 0) {
+                var $el = $("<div>").addClass("sensei-anywhere")
+                    .append($("<input>").addClass("mousetrap"))
+                    .append($("<ul>").addClass("sensei-anywhere-list"));
+                $("body").append($el);
+            }
+
             plugin.data = data;
             Mousetrap.bind(shortcuts, plugin.showSearchBox);
             Mousetrap.bind(["esc"], function (e) {
