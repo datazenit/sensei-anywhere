@@ -1,5 +1,11 @@
 (function ($) {
 
+    /**
+     * Fuzzy search logic
+     * @param search
+     * @param text
+     * @returns {boolean}
+     */
     function match(search, text) {
         search = search.toUpperCase();
         text = text.toUpperCase();
@@ -26,6 +32,9 @@
         plugin.lastSet = [];
         plugin.isActive = false;
 
+        /**
+         * Internal event handling system
+         */
         plugin.events = {_events: {}};
         plugin.on = plugin.events.on = function (event, callback, context) {
             if (!_.has(this._events, event)) {
@@ -50,6 +59,9 @@
             }
         };
 
+        /**
+         * Show search box
+         */
         plugin.showSearchBox = function () {
             plugin.isActive = true;
             $(".sensei-anywhere").toggle();
@@ -59,12 +71,19 @@
             plugin.events.trigger("show");
         };
 
+        /**
+         * Hide search box
+         */
         plugin.hideSearchBox = function () {
             $(".sensei-anywhere").hide();
             plugin.isActive = false;
             plugin.events.trigger("close");
         };
 
+        /**
+         * Update search results
+         * @param term
+         */
         plugin.updateResults = function (term) {
 
             var head;
@@ -101,6 +120,9 @@
             $(".sensei-anywhere .sensei-anywhere-list li.item:first").addClass("active");
         };
 
+        /**
+         * Move selection up
+         */
         plugin.moveActiveItemUp = function () {
             var $curr = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
             $curr.removeClass("active");
@@ -112,6 +134,9 @@
             plugin.events.trigger("highlight", $item.text());
         };
 
+        /**
+         * Move selection down
+         */
         plugin.moveActiveItemDown = function () {
             var $curr = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
             $curr.removeClass("active");
@@ -123,12 +148,21 @@
             plugin.events.trigger("highlight", $item.text());
         };
 
+        /**
+         * Choose active item
+         */
         plugin.chooseItem = function () {
             var item = $(".sensei-anywhere .sensei-anywhere-list li.item.active").text();
             plugin.hideSearchBox();
             plugin.events.trigger("select", item);
         };
 
+        /**
+         * Initialize plugin
+         * @param data
+         * @param shortcuts
+         * @returns {jQuery}
+         */
         plugin.init = function (data, shortcuts) {
 
             // render html
@@ -180,6 +214,14 @@
             });
             plugin.events.trigger("init");
             return plugin;
+        };
+
+        /**
+         * Set data
+         * @param data
+         */
+        plugin.setData = function (data) {
+            plugin.data = data;
         };
 
         return plugin.init(data, shortcuts);
