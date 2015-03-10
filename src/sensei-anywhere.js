@@ -74,7 +74,13 @@
          * Hide search box
          */
         plugin.hideSearchBox = function () {
+
+            // hide search box itself
             $(".sensei-anywhere").hide();
+
+            // clear search box
+            $(".sensei-anywhere").find("input").val(null);
+
             plugin.isActive = false;
             plugin.events.trigger("close");
         };
