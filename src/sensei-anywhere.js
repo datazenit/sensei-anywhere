@@ -1,26 +1,100 @@
 (function ($) {
 
-    /**
-     * Fuzzy search logic
-     * @param search
-     * @param text
-     * @returns {boolean}
-     */
-    function match(search, text) {
-        search = search.toUpperCase();
-        text = text.toUpperCase();
+    /*!
+     * String Scoring Algorithm 0.1.21
+     *
+     * http://joshaven.com/string_score
+     * https://github.com/joshaven/string_score
+     *
+     * Copyright (C) 2009-2014 Joshaven Potter <yourtech@gmail.com>
+     * Special thanks to all of the contributors listed here https://github.com/joshaven/string_score
+     * MIT License: http://opensource.org/licenses/MIT
+     *
+     * Date: Tue Mar 1 2011
+     * Updated: Wed Jun 18 2014
+    */
+    String.prototype.score = function (word, fuzziness) {
+        'use strict';
 
-        var j = -1;
+        // If the string is equal to the word, perfect match.
+        if (this === word) { return 1; }
 
-        for (var i = 0; i < search.length; i++) {
-            var l = search[i];
-            if (l == ' ') continue;
+        //if it's not a perfect match and is empty return 0
+        if (word === "") { return 0; }
 
-            j = text.indexOf(l, j + 1);
-            if (j == -1) return false;
+        var runningScore = 0,
+            charScore,
+            finalScore,
+            string = this,
+            lString = string.toLowerCase(),
+            strLength = string.length,
+            lWord = word.toLowerCase(),
+            wordLength = word.length,
+            idxOf,
+            startAt = 0,
+            fuzzies = 1,
+            fuzzyFactor,
+            i;
+
+        // Cache fuzzyFactor for speed increase
+        if (fuzziness) fuzzyFactor = 1 - fuzziness;
+
+        // Walk through word and add up scores.
+        // Code duplication occurs to prevent checking fuzziness inside for loop
+        if (fuzziness) {
+            for (i = 0; i < wordLength; ++i) {
+
+                // Find next first case-insensitive match of a character.
+                idxOf = lString.indexOf(lWord[i], startAt);
+
+                if (-1 === idxOf) {
+                    fuzzies += fuzzyFactor;
+                    continue;
+                } else if (startAt === idxOf) {
+                    // Consecutive letter & start-of-string Bonus
+                    charScore = 0.7;
+                } else {
+                    charScore = 0.1;
+
+                    // Acronym Bonus
+                    // Weighing Logic: Typing the first character of an acronym is as if you
+                    // preceded it with two perfect character matches.
+                    if (string[idxOf - 1] === ' ') charScore += 0.8;
+                }
+
+                // Same case bonus.
+                if (string[idxOf] === word[i]) charScore += 0.1;
+
+                // Update scores and startAt position for next round of indexOf
+                runningScore += charScore;
+                startAt = idxOf + 1;
+            }
+        } else {
+            for (i = 0; i < wordLength; ++i) {
+                idxOf = lString.indexOf(lWord[i], startAt);
+                if (-1 === idxOf) {
+                    return 0;
+                } else if (startAt === idxOf) {
+                    charScore = 0.7;
+                } else {
+                    charScore = 0.1;
+                    if (string[idxOf - 1] === ' ') charScore += 0.8;
+                }
+                if (string[idxOf] === word[i]) charScore += 0.1;
+                runningScore += charScore;
+                startAt = idxOf + 1;
+            }
         }
-        return true;
-    }
+
+        // Reduce penalty for longer strings.
+        finalScore = 0.5 * (runningScore / strLength    + runningScore / wordLength) / fuzzies;
+
+        if ((lWord[0] === lString[0]) && (finalScore < 0.85)) {
+            finalScore += 0.15;
+        }
+
+        return finalScore;
+    };
 
     $.anywhere = function (data, shortcuts, limitPerGroup, showGroupCount) {
 
@@ -99,9 +173,13 @@
             _.each(plugin.data, function (group) {
 
                 if (term) {
-                    head = _.filter(group.items, function (item) {
-                        return match(term, item);
+
+                    head = _.sortBy(_.filter(group.items, function (item) {
+                        return item.score(term) > 0;
+                    }), function (item) {
+                        return item.score(term) * -1;
                     });
+
                 } else {
                     head = group.items;
                 }
