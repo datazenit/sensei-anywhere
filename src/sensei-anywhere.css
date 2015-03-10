@@ -1,6 +1,6 @@
 
 .sensei-anywhere {
-    font: 14px Helvetica, Arial, sans-serif;
+    font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 20px;
     position: absolute;
     top: 200px;
@@ -8,15 +8,19 @@
     margin-left: -200px;
     width: 400px;
     display: none;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,.5);
 }
 .sensei-anywhere input {
     border: 1px solid #ccc;
-    padding: 7px 8px;
+    padding: 8px 6px 4px 10px;
     border-radius: 3px;
     background: white;
     /*box-shadow: 0 1px 3px rgba(0,0,0,0.1);*/
     outline: none;
     width: 100%;
+    font-size: 26px;
 }
 .sensei-anywhere ul {
     /*margin-top: 10px;*/
@@ -24,29 +28,39 @@
     padding: 0;
     /*border: 1px solid #f2f2f2;*/
     border-top-style: none;
-    margin-top: 3px;
+    margin-top: 20px;
 }
 .sensei-anywhere li.item-group {
-    background: #eee;
-    padding: 3px 4px 2px 8px;
-    font-size: 12px;
+    /*background: #eee;*/
+    background: #f7f7f7;
+    padding: 3px 8px 2px 8px;
+    /*font-size: 12px;*/
     /*border-top: 1px solid #ddd;*/
     font-weight: bold;
     text-transform: capitalize;
+    margin-top: 10px;
 }
 .sensei-anywhere li .group-count {
     color: gray;
+    float: right;
+    font-weight: normal;
 }
 .sensei-anywhere li.item {
-    background: #f7f7f7;
-    padding: 3px 12px;
+    /*background: #f7f7f7;*/
+    padding: 3px 8px;
+    cursor: pointer;
     /*border-top: 1px solid #ddd;*/
 }
 .sensei-anywhere li.item:first-child {
     /*border-top-style: none;*/
 }
-.sensei-anywhere li.item.active,
 .sensei-anywhere li.item:hover {
+    background: #f4f4f4;
+    color: black;
+}
+.sensei-anywhere li.item.active
+/*.sensei-anywhere li.item:hover */
+{
     background: #3c2b4d;
     color: white;
 }
