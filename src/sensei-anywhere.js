@@ -259,19 +259,19 @@
 
             plugin.data = data;
             Mousetrap.bind(shortcuts, plugin.showSearchBox);
-            Mousetrap.bind(["esc"], function (e) {
+            Mousetrap.bind(["esc","ctrl+c"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.hideSearchBox();
                 }
             });
-            Mousetrap.bind(["up", "shift+tab"], function (e) {
+            Mousetrap.bind(["up", "shift+tab", "ctrl+p"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.moveActiveItemUp();
                 }
             });
-            Mousetrap.bind(["down", "tab"], function (e) {
+            Mousetrap.bind(["down", "tab", "ctrl+n"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.moveActiveItemDown();
