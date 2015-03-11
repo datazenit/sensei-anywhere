@@ -45,16 +45,18 @@
             },
             {
                 group: "tasks",
-                items: ["jshint", "jslint", "test", "cssminify", "build"]
+                items: ["jshint", "jslint", "test", "cssminify", "build", "uglify", "imagemin", "concat", "watch", 
+                    "build", "bump", "qunit", "clean", "browserify", "jsx", "less", "sass"]
             },
             {
-                group: "VCS",
-                items: ["pull", "push", "commit", "merge", "diff", "rebase", "checkout", "stash", "tag"]
+                group: "git",
+                items: ["pull", "push", "commit", "merge", "diff", "rebase", "checkout", "stash", "tag", "cherry", 
+                    "grep", "show", "log", "clone", "branch", "bisect", "add", "init", "fetch"]
             }
         ];
 
         var limitPerGroup = 5;
-        var anywhere = $.anywhere(data, ['command+k', 'ctrl+k'], limitPerGroup, true);
+        var anywhere = $.anywhere(data, ['command+shift+k', 'ctrl+shift+k'], limitPerGroup, true);
 
         anywhere.events.on("select", function (item, data) {
             alert("Cool, your selected item: " + item);
