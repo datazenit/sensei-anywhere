@@ -226,15 +226,17 @@
                     }
 
                     _.each(head.slice(0, group_size), function (item) {
+                        var data = {group: group.group, item: item};
+
                         if (_.isObject(item) && plugin.settings.displayField && !plugin.settings.customFormatter) {
                             item = item[plugin.settings.displayField];
                         }
 
                         if (plugin.settings.customFormatter) {
                             item = plugin.settings.customFormatter(item);
-                            $wrapper.append($("<li>").addClass("item").html(item).data("group", group.group));
+                            $wrapper.append($("<li>").addClass("item").html(item).data(data));
                         } else {
-                            $wrapper.append($("<li>").addClass("item").text(item).data("group", group.group));
+                            $wrapper.append($("<li>").addClass("item").text(item).data(data));
                         }
                     });
                 }
@@ -291,7 +293,7 @@
          */
         plugin.chooseItem = function () {
             var $item = $(".sensei-anywhere .sensei-anywhere-list li.item.active");
-            var item = $item.text();
+            var item = $item.data("item");
             plugin.hideSearchBox();
             plugin.events.trigger("select", item, $item.data());
         };
