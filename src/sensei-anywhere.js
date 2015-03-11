@@ -103,7 +103,9 @@
             limitPerGroup: 5,
             showGroupCount: true,
             shortcuts: ["command+shift+k", "ctrl+shift+k"],
-            height: 400
+            height: 400,
+            displayField: false,
+            customFormatter: false,
         }
         this.settings = $.extend({}, defaults, options);
 
@@ -212,7 +214,16 @@
                     }
 
                     _.each(head.slice(0, group_size), function (item) {
-                        $wrapper.append($("<li>").addClass("item").text(item).data("group", group.group));
+                        if (_.isObject(item) && plugin.settings.displayField && !plugin.settings.customFormatter) {
+                            item = item[plugin.settings.displayField];
+                        }
+
+                        if (plugin.settings.customFormatter) {
+                            item = plugin.settings.customFormatter(item);
+                            $wrapper.append($("<li>").addClass("item").html(item).data("group", group.group));
+                        } else {
+                            $wrapper.append($("<li>").addClass("item").text(item).data("group", group.group));
+                        }
                     });
                 }
 
