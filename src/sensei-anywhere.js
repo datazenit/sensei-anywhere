@@ -96,10 +96,16 @@
         return finalScore;
     };
 
-    $.anywhere = function (data, shortcuts, limitPerGroup, showGroupCount) {
+    $.anywhere = function (data, options) {
 
-        // default value for limitPerGroup setting
-        limitPerGroup = limitPerGroup || 5;
+        //shortcuts, limitPerGroup, showGroupCount
+        var defaults = {
+            limitPerGroup: 5,
+            showGroupCount: true,
+            shortcuts: ["command+shift+k", "ctrl+shift+k"],
+            height: 400
+        }
+        this.settings = $.extend({}, defaults, options);
 
         var plugin = this;
         plugin.data = [];
@@ -159,6 +165,18 @@
             plugin.events.trigger("close");
         };
 
+        plugin.scoreItem = function (term, item) {
+            if (_.isObject(item)) {
+                var score = 0;
+                _.mapValues(item, function (val) {
+                    score += val.score(term);
+                });
+                return score;
+            }
+
+            return item.score(term);
+        };
+
         /**
          * Update search results
          * @param term
@@ -166,7 +184,7 @@
         plugin.updateResults = function (term) {
 
             var head;
-            var group_size = limitPerGroup;
+            var group_size = plugin.settings.limitPerGroup;
             var $wrapper = $(".sensei-anywhere .sensei-anywhere-list");
             $wrapper.html("");
 
@@ -175,9 +193,9 @@
                 if (term) {
 
                     head = _.sortBy(_.filter(group.items, function (item) {
-                        return item.score(term) > 0;
+                        return plugin.scoreItem(term, item) > 0;
                     }), function (item) {
-                        return item.score(term) * -1;
+                        return plugin.scoreItem(term, item) * -1;
                     });
 
                 } else {
@@ -188,7 +206,7 @@
                     var $li = $("<li>").addClass("item-group").text(group.group);
                     $wrapper.append($li);
 
-                    if (showGroupCount) {
+                    if (plugin.settings.showGroupCount) {
                         var $span = $("<span>").addClass("group-count").text(" " + head.length);
                         $li.append($span);
                     }
@@ -247,18 +265,19 @@
          * @param shortcuts
          * @returns {jQuery}
          */
-        plugin.init = function (data, shortcuts) {
+        plugin.init = function (data) {
 
             // render html
             if ($(".sensei-anywhere").length === 0) {
                 var $el = $("<div>").addClass("sensei-anywhere")
                     .append($("<input>").addClass("mousetrap"))
-                    .append($("<ul>").addClass("sensei-anywhere-list"));
+                    .append($("<ul>").addClass("sensei-anywhere-list"))
+                    .css("max-height", plugin.settings.height);
                 $("body").append($el);
             }
 
             plugin.data = data;
-            Mousetrap.bind(shortcuts, plugin.showSearchBox);
+            Mousetrap.bind(plugin.settings.shortcuts, plugin.showSearchBox);
             Mousetrap.bind(["esc","ctrl+c"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
@@ -307,7 +326,7 @@
             plugin.data = data;
         };
 
-        return plugin.init(data, shortcuts);
+        return plugin.init(data);
 
     }
 

@@ -11,6 +11,7 @@
     padding: 15px;
     background: white;
     box-shadow: 0 10px 25px rgba(0,0,0,.5);
+    overflow: auto;
 }
 .sensei-anywhere input {
     border: 1px solid #ccc;

@@ -55,8 +55,10 @@
             }
         ];
 
-        var limitPerGroup = 5;
-        var anywhere = $.anywhere(data, ['command+shift+k', 'ctrl+shift+k'], limitPerGroup, true);
+        var options = {
+            shortcuts: ['command+shift+k', 'ctrl+shift+k']
+        };
+        var anywhere = $.anywhere(data, options);
 
         anywhere.events.on("select", function (item, data) {
             alert("Cool, your selected item: " + item);
