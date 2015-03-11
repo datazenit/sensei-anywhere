@@ -96,6 +96,18 @@
         return finalScore;
     };
 
+    function inViewport($el, $container) {
+
+        var rect = $el[0].getBoundingClientRect();
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= $container.height() - $el.height() &&
+            rect.right <= $container.width() - $el.width()
+        );
+    }
+
     $.anywhere = function (data, options) {
 
         //shortcuts, limitPerGroup, showGroupCount
@@ -103,7 +115,7 @@
             limitPerGroup: 5,
             showGroupCount: true,
             shortcuts: ["command+shift+k", "ctrl+shift+k"],
-            height: 400,
+            height: 300,
             displayField: false,
             customFormatter: false,
         }
@@ -233,6 +245,18 @@
         };
 
         /**
+         * Scroll element into container view just by the height of element
+         */
+        plugin.scrollIntoView = function ($el, $container) {
+            var elPos = $el.offset();
+            var cPos = $container.offset();
+            var eHeight = $el.outerHeight();
+            var cHeight = $container.height();
+            var scrollTop = elPos.top - cPos.top - cHeight + eHeight;
+            $container.scrollTop($container.scrollTop() + scrollTop);
+        }
+
+        /**
          * Move selection up
          */
         plugin.moveActiveItemUp = function () {
@@ -243,6 +267,7 @@
             } else {
                 var $item = $(".sensei-anywhere .sensei-anywhere-list li.item:last").addClass("active");
             }
+            plugin.scrollIntoView($item, $(".sensei-anywhere ul"));
             plugin.events.trigger("highlight", $item.text());
         };
 
@@ -257,6 +282,7 @@
             } else {
                 var $item = $(".sensei-anywhere .sensei-anywhere-list li.item:first").addClass("active");
             }
+            plugin.scrollIntoView($item, $(".sensei-anywhere ul"));
             plugin.events.trigger("highlight", $item.text());
         };
 
@@ -280,10 +306,13 @@
 
             // render html
             if ($(".sensei-anywhere").length === 0) {
+                var $ul = $("<ul>").addClass("sensei-anywhere-list")
+                    .css("max-height", plugin.settings.height);
+
                 var $el = $("<div>").addClass("sensei-anywhere")
                     .append($("<input>").addClass("mousetrap"))
-                    .append($("<ul>").addClass("sensei-anywhere-list"))
-                    .css("max-height", plugin.settings.height);
+                    .append($ul);
+
                 $("body").append($el);
             }
 
