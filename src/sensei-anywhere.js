@@ -283,12 +283,6 @@
                     plugin.chooseItem();
                 }
             });
-            Mousetrap.bind(["esc"], function (e) {
-                if (plugin.isActive) {
-                    e.preventDefault();
-                    plugin.hideSearchBox();
-                }
-            });
             $(".sensei-anywhere input").on("keyup", function (e) {
                 var usedKeyCodes = [9, 13, 38, 40];
                 if (!_.contains(usedKeyCodes, e.which)) {
