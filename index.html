@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sensei Anywhere by datazenit</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Sensei Anywhere</h1>
+        <p>Navigation tool powered by fuzzy search (JS/HTML)</p>
+
+        <p class="view"><a href="https://github.com/datazenit/sensei-anywhere">View the Project on GitHub <small>datazenit/sensei-anywhere</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/datazenit/sensei-anywhere/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/datazenit/sensei-anywhere/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/datazenit/sensei-anywhere">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="sensei-anywhere" class="anchor" href="#sensei-anywhere" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sensei Anywhere</h1>
+
+<p>Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is used in <a href="http://datazenit.com/">Datazenit</a> to navigate between connections, databases and tables. This project is currently under heavy development, use at your own risk. </p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Sensei Anywhere depends on jQuery, lodash/underscore.js and Mousetrap. Include these libraries together with <code>sensei-anywhere.css</code> and <code>sensei-anywhere.js</code>.</p>
+
+<h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
+
+<p>Click on the image to view demo.</p>
+
+<p><a href="http://datazenit.com/static/sensei-anywhere/example/"><img src="http://lauris.github.io/images/blog/sensei-anywhere.png" alt="Sensei Anywhere Demo"></a></p>
+
+<h2>
+<a id="more-info" class="anchor" href="#more-info" aria-hidden="true"><span class="octicon octicon-link"></span></a>More info</h2>
+
+<p>Read this blog post: <a href="http://lauris.github.io/development/2014/09/16/sensei-anywhere/">Sensei Anywhere</a>.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Create an array containing your items, e.g., file names, paths, links or anything else. </p>
+
+<pre><code>var data = [
+    {
+        group: "files",
+        items: "assets/main.css", "assets/test.js", "assets/main.min.css", "assets/test.min.js"
+    }
+];
+</code></pre>
+
+<p>Initialize Sensei Anywhere and define shortcuts. In this example shortcuts are <code>command+k</code> and <code>ctrl+k</code>. You can define as many shortcuts as you want.</p>
+
+<pre><code>var anywhere = $.anywhere(data, ['command+k', 'ctrl+k']);
+</code></pre>
+
+<p>Listen to "select" event to get the selected item.</p>
+
+<pre><code>anywhere.events.on("select", function (item) {
+   alert("Cool, your selected item: " + item);
+});
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/datazenit">datazenit</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
