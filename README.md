@@ -1,6 +1,6 @@
 # Sensei Anywhere
 
-Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is used in [Datazenit](http://datazenit.com/) to navigate between connections, databases and tables. This project is currently under heavy development, use at your own risk. 
+Sensei Anywhere is a navigation tool powered by fuzzy search. Sensei Anywhere is used in [Datazenit](http://datazenit.com/) to navigate between connections, databases and tables. This project is currently under heavy development, use at your own risk.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Sensei Anywhere depends on jQuery, lodash/underscore.js and Mousetrap. Include t
 
 Click on the image to view demo.
 
-[![Sensei Anywhere Demo](http://lauris.github.io/images/blog/sensei-anywhere.png)](http://datazenit.com/static/sensei-anywhere/example/)
+[![Sensei Anywhere Demo](https://cloud.githubusercontent.com/assets/625264/6615380/11948574-c8ac-11e4-9058-56f3feb9813f.png)](http://datazenit.com/static/sensei-anywhere/example/)
 
 ## More info
 
@@ -18,7 +18,7 @@ Read this blog post: [Sensei Anywhere](http://lauris.github.io/development/2014/
 
 ## Usage
 
-Create an array containing your items, e.g., file names, paths, links or anything else. 
+Create an array containing your items, e.g., file names, paths, links or anything else.
 
 ```
 var data = [
