@@ -12,20 +12,24 @@
      *
      * Date: Tue Mar 1 2011
      * Updated: Wed Jun 18 2014
-    */
-    String.prototype.score = function (word, fuzziness) {
+     */
+    function score(term, word, fuzziness) {
         'use strict';
 
         // If the string is equal to the word, perfect match.
-        if (this === word) { return 1; }
+        if (term === word) {
+            return 1;
+        }
 
         //if it's not a perfect match and is empty return 0
-        if (word === "") { return 0; }
+        if (word === "") {
+            return 0;
+        }
 
         var runningScore = 0,
             charScore,
             finalScore,
-            string = this,
+            string = term,
             lString = string.toLowerCase(),
             strLength = string.length,
             lWord = word.toLowerCase(),
@@ -87,38 +91,26 @@
         }
 
         // Reduce penalty for longer strings.
-        finalScore = 0.5 * (runningScore / strLength    + runningScore / wordLength) / fuzzies;
+        finalScore = 0.5 * (runningScore / strLength + runningScore / wordLength) / fuzzies;
 
         if ((lWord[0] === lString[0]) && (finalScore < 0.85)) {
             finalScore += 0.15;
         }
 
         return finalScore;
-    };
-
-    function inViewport($el, $container) {
-
-        var rect = $el[0].getBoundingClientRect();
-
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= $container.height() - $el.height() &&
-            rect.right <= $container.width() - $el.width()
-        );
     }
 
     $.anywhere = function (data, options) {
 
-        //shortcuts, limitPerGroup, showGroupCount
         var defaults = {
             limitPerGroup: 5,
             showGroupCount: true,
             shortcuts: ["command+shift+k", "ctrl+shift+k"],
             height: 300,
             displayField: false,
-            customFormatter: false,
-        }
+            customFormatter: false
+        };
+
         this.settings = $.extend({}, defaults, options);
 
         var plugin = this;
@@ -181,14 +173,14 @@
 
         plugin.scoreItem = function (term, item) {
             if (_.isObject(item)) {
-                var score = 0;
+                var objScore = 0;
                 _.mapValues(item, function (val) {
-                    score += val.score(term);
+                    objScore += score(val + "", term);
                 });
-                return score;
+                return objScore;
             }
 
-            return item.score(term);
+            return score(item, term);
         };
 
         /**
@@ -232,10 +224,20 @@
                             item = item[plugin.settings.displayField];
                         }
 
-                        if (plugin.settings.customFormatter) {
+                        // override display field if this group has a custom one
+                        if (_.isObject(item) && group.displayField && !plugin.settings.customFormatter) {
+                            item = item[group.displayField];
+                        }
+
+                        // groups formatter comes first
+                        if (group.customFormatter) {
+                            item = group.customFormatter(item);
+                            $wrapper.append($("<li>").addClass("item").html(item).data(data));
+                        } else if (plugin.settings.customFormatter) {
                             item = plugin.settings.customFormatter(item);
                             $wrapper.append($("<li>").addClass("item").html(item).data(data));
                         } else {
+                            // text() here because we need to escape raw values
                             $wrapper.append($("<li>").addClass("item").text(item).data(data));
                         }
                     });
@@ -256,7 +258,7 @@
             var cHeight = $container.height();
             var scrollTop = elPos.top - cPos.top - cHeight + eHeight;
             $container.scrollTop($container.scrollTop() + scrollTop);
-        }
+        };
 
         /**
          * Move selection up
@@ -320,7 +322,7 @@
 
             plugin.data = data;
             Mousetrap.bind(plugin.settings.shortcuts, plugin.showSearchBox);
-            Mousetrap.bind(["esc","ctrl+c"], function (e) {
+            Mousetrap.bind(["esc", "ctrl+c"], function (e) {
                 if (plugin.isActive) {
                     e.preventDefault();
                     plugin.hideSearchBox();
